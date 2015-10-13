@@ -1,15 +1,15 @@
 use v6;
 
-sub canon_filepath(Str $path) is export {
-    my $p = $path;
-    return canon_path($p) if $*DISTRO.is-win;
+sub canon-filepath(Str $path) is export {
+    my $p = $path || '';
+    return canon-path($p) unless $*DISTRO.is-win;
     $p = $p.subst('\\', '/', :g);
-    $p = $p.subst(/^ (<[a .. z A .. Z]> ':' | '//' [^ '/'] + '/' + [^ '/'] +)/, '', :g);
-    $path = (~$/||'') ~ canon_path($path);
-    return $path.subst('/', '\\', :g);
+    $p = $p.subst(/^ (<[a .. z A .. Z]> ':' | '//' [^ '/']+ '/'+ [^ '/']+)/, '', :g);
+    $p = ($/.defined ?? ~$/ !! '') ~ canon-path($p);
+    return $p.subst('/', '\\', :g);
 }
 
-sub canon_path(Str $path) is export {
+sub canon-path(Str $path) is export {
     my $p = $path;
     my @ret = ();
     $p = $p ~ '/' if $p.ends-with('.') or $p.ends-with('/');
