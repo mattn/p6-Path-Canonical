@@ -2,7 +2,7 @@ use v6;
 use Test;
 use Path::Canonical;
 
-skip "Those tests are working on windows" if $*DISTRO.is-win;
+skip("Those tests are working on windows", 6) if $*DISTRO.is-win;
 is canon-filepath('c:\\path/to/../from/file.txt'), 'c:\\path\\from\\file.txt';
 is canon-filepath('c:/\\path/to/../..\\..//file.txt'), 'c:\\file.txt';
 is canon-filepath('\\\\path/to/../from/file.txt'), '\\\\path\\to\\from\\file.txt';
