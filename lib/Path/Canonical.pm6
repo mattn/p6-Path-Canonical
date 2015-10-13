@@ -4,7 +4,7 @@ sub canon-filepath(Str $path) is export {
     my $p = $path || '';
     return canon-path($p) unless $*DISTRO.is-win;
     $p = $p.subst('\\', '/', :g);
-    $p = $p.subst(/^ (<[a .. z A .. Z]> ':' | '//' [^ '/']+ '/'+ [^ '/']+)/, '', :g);
+    $p = $p.subst(/^ (<[a .. z A .. Z]> ':' | '//' <-[/]>+ '/'+ <-[/]>+)/, '', :g);
     $p = ($/.defined ?? ~$/ !! '') ~ canon-path($p);
     return $p.subst('/', '\\', :g);
 }
